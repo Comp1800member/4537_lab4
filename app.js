@@ -90,7 +90,6 @@ addWord("pie", "a baked dish of fruit, or meat and vegetables, typically with a 
 addWord("sleep", "a condition of body and mind that typically recurs for several hours every night, in which the eyes are closed, the postural muscles relaxed, the activity of the brain altered, and consciousness of the surroundings practically suspended.");
 addWord("happy", "feeling or showing pleasure or contentment.");
 addWord("play", "engage in activity for enjoyment and recreation rather than a serious or practical purpose.");
-addWord("cart", "a strong open vehicle with two or four wheels, typically used for carrying loads and pulled by a horse.");
 
 const port = process.env.PORT || 5500;
 server.listen(port, () => {
