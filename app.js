@@ -9,8 +9,6 @@ const server = http.createServer((req, res) => {
     const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname;
     const query = parsedUrl.query;
-    let numRequests = 0;
-    const dict = [];
 
     // Allowing CORS below.
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -62,9 +60,9 @@ const server = http.createServer((req, res) => {
     }
 });
 
-function getNumRequests() {
-    return numRequests;
-}
+
+let numRequests = 0;
+const dict = [];
 
 function getDictionary() {
     return dict;
@@ -85,12 +83,15 @@ function getDefinition(word) {
     return entry ? entry.definition : null;
 }
 
-/*
-Seeding the dictionary with a few of my personal favourite words.
-*/
+function getNumRequests() {
+    return numRequests;
+}
+
 addWord("pie", "a baked dish of fruit, or meat and vegetables, typically with a top and base of pastry.");
 addWord("sleep", "a condition of body and mind that typically recurs for several hours every night, in which the eyes are closed, the postural muscles relaxed, the activity of the brain altered, and consciousness of the surroundings practically suspended.");
 addWord("happy", "feeling or showing pleasure or contentment.");
+addWord("play", "engage in activity for enjoyment and recreation rather than a serious or practical purpose.");
+addWord("cart", "a strong open vehicle with two or four wheels, typically used for carrying loads and pulled by a horse.");
 
 const port = process.env.PORT || 5500;
 server.listen(port, () => {
