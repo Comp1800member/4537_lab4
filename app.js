@@ -31,7 +31,7 @@ const server = http.createServer((req, res) => {
     } 
     //post method then if pathname is /api/definitions or /api/definitions/ then get the word and definition
     //then write the word and definition to the response
-    //if input is invalid then return that it's not right.
+    //if input is invalid then return that it's not
     else if (req.method === "POST" && pathname === "/api/definitions" || pathname === "/api/definitions/") {
         let body = "";
         req.on("data", (chunk) => {
@@ -44,7 +44,7 @@ const server = http.createServer((req, res) => {
             if (!word || !definition) {
                 res.statusCode = 400;
                 res.setHeader("Content-Type", "application/json");
-                res.end(JSON.stringify({ message: "bad input. You require word + definition." }));
+                res.end(JSON.stringify({ message: "Invalid input. Both word and definition are required." }));
             } else {
                 res.statusCode = 201;
                 res.setHeader("Content-Type", "application/json");
@@ -59,7 +59,6 @@ const server = http.createServer((req, res) => {
         res.end();
     }
 });
-
 
 let numRequests = 0;
 const dict = [];
