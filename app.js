@@ -1,5 +1,6 @@
-// ChatGPT-3.5 (https://chat.openai.com/) was used to code solutions presented in this assignment
-
+/*
+I used ChatGpt to code certain parts.
+*/
 const http = require("http");
 const url = require("url");
 const qs = require("querystring");
@@ -8,9 +9,15 @@ const server = http.createServer((req, res) => {
     const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname;
     const query = parsedUrl.query;
+    let numRequests = 0;
+    const dict = [];
 
+    // Allowing CORS below.
     res.setHeader("Access-Control-Allow-Origin", "*");
 
+    //get method then if pathname is /api/definitions or /api/definitions/ then get the word and definition
+    //then write the word and definition to the response
+    //if the word does not exist then write that the word does not exist to the response
     if (req.method === "GET" && pathname == "/api/definitions" || pathname == "/api/definitions/") {
         const word = query.word;
         const definition = getDefinition(word);
@@ -20,10 +27,14 @@ const server = http.createServer((req, res) => {
             res.end();
         } else {
             res.writeHead(404, { "Content-Type": "application/json" });
-            res.write(JSON.stringify({ message: `The word "${word}" does not exist.` }));
+            res.write(JSON.stringify({ message: `${word}" does not exist.` }));
             res.end();
         }
-    } else if (req.method === "POST" && pathname === "/api/definitions" || pathname === "/api/definitions/") {
+    } 
+    //post method then if pathname is /api/definitions or /api/definitions/ then get the word and definition
+    //then write the word and definition to the response
+    //if input is invalid then return that it's not right.
+    else if (req.method === "POST" && pathname === "/api/definitions" || pathname === "/api/definitions/") {
         let body = "";
         req.on("data", (chunk) => {
             body += chunk;
@@ -35,7 +46,7 @@ const server = http.createServer((req, res) => {
             if (!word || !definition) {
                 res.statusCode = 400;
                 res.setHeader("Content-Type", "application/json");
-                res.end(JSON.stringify({ message: "Invalid input. Both word and definition are required." }));
+                res.end(JSON.stringify({ message: "bad input. You require word + definition." }));
             } else {
                 res.statusCode = 201;
                 res.setHeader("Content-Type", "application/json");
@@ -51,17 +62,18 @@ const server = http.createServer((req, res) => {
     }
 });
 
-let numRequests = 0;
-const dict = [];
+function getNumRequests() {
+    return numRequests;
+}
 
 function getDictionary() {
     return dict;
 }
 
 function addWord(word, definition) {
-    existingWord = dict.find((entry) => entry.word === word);
-    if (existingWord) {
-        return `Warning! The word "${word}" already exists.`;
+    myWord = dict.find((entry) => entry.word === word);
+    if (myWord) {
+        return `"${word}" already exists.`;
     }
     dict.push({ word, definition });
     numRequests++;
@@ -73,15 +85,12 @@ function getDefinition(word) {
     return entry ? entry.definition : null;
 }
 
-function getNumRequests() {
-    return numRequests;
-}
-
+/*
+Seeding the dictionary with a few of my personal favourite words.
+*/
 addWord("pie", "a baked dish of fruit, or meat and vegetables, typically with a top and base of pastry.");
 addWord("sleep", "a condition of body and mind that typically recurs for several hours every night, in which the eyes are closed, the postural muscles relaxed, the activity of the brain altered, and consciousness of the surroundings practically suspended.");
 addWord("happy", "feeling or showing pleasure or contentment.");
-addWord("play", "engage in activity for enjoyment and recreation rather than a serious or practical purpose.");
-addWord("cart", "a strong open vehicle with two or four wheels, typically used for carrying loads and pulled by a horse.");
 
 const port = process.env.PORT || 5500;
 server.listen(port, () => {
