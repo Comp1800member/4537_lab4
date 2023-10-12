@@ -10,7 +10,6 @@ const server = http.createServer((req, res) => {
     const query = parsedUrl.query;
 
     res.setHeader("Access-Control-Allow-Origin", "*");
-    // res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
 
     if (req.method === "GET" && pathname == "/api/definitions" || pathname == "/api/definitions/") {
         const word = query.word;
@@ -78,11 +77,11 @@ function getNumRequests() {
     return numRequests;
 }
 
-addWord("utilitarianism", "the doctrine that actions are right if they are useful or for the benefit of a majority");
-addWord("objectivism", "the belief that certain things, especially moral truths, exist independently of human knowledge or perception of them");
-addWord("relativism", "the doctrine that knowledge, truth, and morality exist in relation to culture, society, or historical context, and are not absolute");
-addWord("absolutism", "the acceptance of or belief in absolute principles in political, philosophical, ethical, or theological matters");
-addWord("john", "smith");
+addWord("pie", "a baked dish of fruit, or meat and vegetables, typically with a top and base of pastry.");
+addWord("sleep", "a condition of body and mind that typically recurs for several hours every night, in which the eyes are closed, the postural muscles relaxed, the activity of the brain altered, and consciousness of the surroundings practically suspended.");
+addWord("happy", "feeling or showing pleasure or contentment.");
+addWord("play", "engage in activity for enjoyment and recreation rather than a serious or practical purpose.");
+addWord("cart", "a strong open vehicle with two or four wheels, typically used for carrying loads and pulled by a horse.");
 
 const port = process.env.PORT || 5500;
 server.listen(port, () => {
