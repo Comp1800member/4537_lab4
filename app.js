@@ -13,9 +13,7 @@ const server = http.createServer((req, res) => {
     // Allowing CORS below.
     res.setHeader("Access-Control-Allow-Origin", "*");
 
-    //get method then if pathname is /api/definitions or /api/definitions/ then get the word and definition
-    //then write the word and definition to the response
-    //if the word does not exist then write that the word does not exist to the response
+    //get method then
     if (req.method === "GET" && pathname == "/api/definitions" || pathname == "/api/definitions/") {
         const word = query.word;
         const definition = getDefinition(word);
@@ -28,11 +26,7 @@ const server = http.createServer((req, res) => {
             res.write(JSON.stringify({ message: `${word}" does not exist.` }));
             res.end();
         }
-    } 
-    //post method then if pathname is /api/definitions or /api/definitions/ then get the word and definition
-    //then write the word and definition to the response
-    //if input is invalid then return that it's not
-    else if (req.method === "POST" && pathname === "/api/definitions" || pathname === "/api/definitions/") {
+    } else if (req.method === "POST" && pathname === "/api/definitions" || pathname === "/api/definitions/") {
         let body = "";
         req.on("data", (chunk) => {
             body += chunk;
@@ -90,6 +84,7 @@ addWord("pie", "a baked dish of fruit, or meat and vegetables, typically with a 
 addWord("sleep", "a condition of body and mind that typically recurs for several hours every night, in which the eyes are closed, the postural muscles relaxed, the activity of the brain altered, and consciousness of the surroundings practically suspended.");
 addWord("happy", "feeling or showing pleasure or contentment.");
 addWord("play", "engage in activity for enjoyment and recreation rather than a serious or practical purpose.");
+addWord("cart", "a strong open vehicle with two or four wheels, typically used for carrying loads and pulled by a horse.");
 
 const port = process.env.PORT || 5500;
 server.listen(port, () => {
